@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -17,9 +17,25 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run(){
     try{
         const dbCollection = client.db('cake_data').collection('menu');
-        // const user = {email:"nahadi@gmail.com", name:"nahadi"};
-        // const result = await userCollection.insertOne(user);
-        // console.log(result);
+        const reviewsCollection = client.db('reviews_data').collection('reviews');
+        app.get('/menu', async(req, res) =>{
+            const query = {};
+            const cursor = dbCollection.find(query);
+            const menu = await cursor.toArray();
+            res.send(menu);
+        });
+
+        app.get('/menu/:id', async(req, res)=>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const menuId = await dbCollection.findOne(query);
+            res.send(menuId);
+        });
+
+        app.post('/reviews', async(req, res)=>{
+            const review = req.body;
+        })
+
     }
     finally{
 
