@@ -16,7 +16,7 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@clu
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 async function run(){
     try{
-        const userCollection = client.db('simpledb').collection('users');
+        const dbCollection = client.db('cake_data').collection('menu');
         // const user = {email:"nahadi@gmail.com", name:"nahadi"};
         // const result = await userCollection.insertOne(user);
         // console.log(result);
