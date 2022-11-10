@@ -76,6 +76,13 @@ async function run(){
             const result = await dbCollection.insertOne(menu);
             res.send(result);
         })
+        app.delete('/reviews/:id', async(req,res)=>{
+            const id = req.params.id;
+            const query = {_id : ObjectId(id)}
+            const result = await reviewsCollection.deleteOne(query);
+            res.send(result);
+        })
+        
 
     }
     finally{
@@ -91,6 +98,7 @@ run().catch(err => console.log(err));
 app.get('/', (req,res) => {
     res.send('hello from mongo server')
 });
+
 
 app.listen(port, ()=>{
     console.log(`listening port ${port}`);
