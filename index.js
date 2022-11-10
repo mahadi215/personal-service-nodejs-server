@@ -52,6 +52,24 @@ async function run(){
             // res.send(reviewId);
          })
 
+         app.get('/myreviews', async(req,res)=>{
+            let query = {};
+            if (req.query.email){
+                query ={
+                    email: req.query.email
+                }
+            }
+            const cursor = reviewsCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result);
+         })
+
+         app.post('/menu', async(req, res)=>{
+            const menu = req.body;
+            const result = await dbCollection.insertOne(menu);
+            res.send(result);
+        })
+
     }
     finally{
 
